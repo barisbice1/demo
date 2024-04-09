@@ -1,0 +1,42 @@
+/* Footer.css */
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Align items vertically */
+  }
+  
+  .social-icons {
+    margin-right: 20px;
+  }
+  
+  .social-icons a {
+    margin-right: 10px;
+  }
+  
+  .social-icons .fab.fa-twitter {
+    color: blue;
+  }
+  
+  .social-icons .fab.fa-instagram {
+    color: purple;
+  }
+  
+  .custom-image {
+    width: 30px;
+    height: 30px; /* Set the height to match the size of the icons */
+    margin-bottom: -10px;
+  }
+  
+  

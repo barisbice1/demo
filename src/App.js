@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+
+import React, { useState } from 'react';
+import Frontend from './Components/Frontend'; // Import your main component
+import Navbar from './Components/Navbar'; // Import the Navbar component
+import Home from './Components/Home'; // Import the Home component
+import './App.css'; // Import the CSS file for global styles
+import Footer from './Components/Footer';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
+  const [currentPage, setCurrentPage] = useState('home');
+
+  const handleNavClick = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Navbar onNavClick={handleNavClick} />
+      {currentPage === 'home' && <Home />}
+      {currentPage === 'calculate' && <Frontend />}
+      <Footer />
     </div>
   );
 }
 
 export default App;
+

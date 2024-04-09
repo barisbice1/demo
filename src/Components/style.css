@@ -1,0 +1,109 @@
+/* styles.css */
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px; /* Add margin to separate the calculator and additional content */
+  margin-left: 10px; /* Adjust left margin */
+  width: 70%; /* Adjust the width as needed */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  
+}
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.label {
+  margin-bottom: 5px;
+}
+
+
+.calculator {
+  width: 100%; /* Fill the container width */
+}
+
+.input {
+  width: 60%; /* Set width to 100% to fill the container */
+  padding: 10px; /* Add padding to the input fields */
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  text-align: center; /* Center the text inside the input fields */
+  display: block; /* Display input fields as block elements */
+
+    background-color: #33FFF3; /* Set the background color to blue */
+    color: black; /* Set text color to contrast with the background */
+  
+}
+
+.button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 21px; /* Increase font size */
+  padding: 37px 37px; /* Increase padding */
+  width: 190px;
+ height: 100px;
+}
+.button:hover {
+  background-color: #0056b3;
+}
+.result {
+  margin-top: 20px;
+  font-weight: bold;
+}
+.photo {
+ width: 190px;
+ height: 100px;
+}
+
+.additional-content {
+  width: 100%; /* Adjust the width as needed */
+  padding: 25px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 300px;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+/* Add blue line under section titles */
+/* Add blue line under all section titles */
+.additional-content h3 {
+  border-bottom: 2px solid blue;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+}
+
+.section p {
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+}
+.additional-content-container {
+  display: flex;
+}
+
+.additional-content {
+  display: flex;
+  flex-direction: row;
+  width: 120%; /* Adjust the width as needed */
+}
+.section {
+  margin-right: 20px;
+ 
+    flex-grow: 1;
+  
+}
+
+.section:last-child {
+  margin-right: 0;
+}
+
