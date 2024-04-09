@@ -2,15 +2,16 @@
 
 .container {
   display: flex;
+  align-self: center;
   justify-content: space-between;
-  margin-top: 20px; /* Add margin to separate the calculator and additional content */
-  margin-left: 10px; /* Adjust left margin */
-  width: 70%; /* Adjust the width as needed */
-  padding: 20px;
+  margin-top: 50px; /* Add margin to separate the calculator and additional content */
+  /* margin-left: 10px; Adjust left margin */
+  width: 70%;
+  /*   padding: 20px; */
   border: 1px solid #ccc;
-  border-radius: 5px;
-  
+  border-radius: 15px;
 }
+
 h2 {
   font-size: 24px;
   margin-bottom: 20px;
@@ -67,7 +68,6 @@ h2 {
   padding: 25px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-right: 300px;
 }
 
 .section {
@@ -107,3 +107,11 @@ h2 {
   margin-right: 0;
 }
 
+.question-mark {
+  margin-top: -10px;
+  margin-left: 10px;
+}
+.description-popup img {
+  width: 100px; /* Adjust the width as needed /
+  height: auto; / Maintain aspect ratio */
+}

@@ -9,15 +9,15 @@ import Footer from './Components/Footer';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('home');
+  const [currentPage, setCurrentPage] = useState('calculate');
 
   const handleNavClick = (page) => {
     setCurrentPage(page);
   };
 
   return (
-    <div>
-      <Navbar onNavClick={handleNavClick} />
+    <div className = "momclass">
+      <Navbar className = "navbar-mom" onNavClick={handleNavClick} />
       {currentPage === 'home' && <Home />}
       {currentPage === 'calculate' && <Frontend />}
       <Footer />

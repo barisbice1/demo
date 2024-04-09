@@ -10,6 +10,7 @@ function Navbar({ onNavClick }) {
 
   return (
     <nav className="navbar">
+
       <ul className="navbar-left">
         <li><a href="#" onClick={() => onNavClick('home')}>Home</a></li>
       </ul>
@@ -18,6 +19,7 @@ function Navbar({ onNavClick }) {
         <li><a href="#" onClick={() => onNavClick('NIOSH')}>NIOSH</a></li>
         <li><a href="#" onClick={() => onNavClick('about')}>About Us</a></li>
       </ul>
+
     </nav>
   );
 }
