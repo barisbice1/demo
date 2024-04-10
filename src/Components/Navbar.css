@@ -40,6 +40,10 @@
   display: inline;
   margin-right: 10px;
 }
+
+.navbar a:hover{
+color: #408697;
+}
   
 
   

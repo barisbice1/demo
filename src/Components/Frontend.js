@@ -44,7 +44,7 @@ function Frontend() {
     doc.text(`Distance Multiplier: ${distanceMultiplier}`, 10, 50);
     doc.text(`Asymmetric Multiplier: ${asymmetricMultiplier}`, 10, 60);
     doc.text(`Coupling Multiplier: ${couplingMultiplier}`, 10, 70);
-    
+
     doc.text(`Recommended Weight Limit (RWL): ${calculatedResult} kg`, 10, 90);
     doc.text(`Name: ${name} ${surname}`, 10, 100);
     doc.save('niosh_calculator.pdf');
@@ -62,7 +62,7 @@ function Frontend() {
 
   // Descriptions for each multiplier
   const descriptions = {
-    horizontalMultiplier: 'This is what you put here.', 
+    horizontalMultiplier: 'This is what you put here.',
     verticalMultiplier: 'This is what you put here.',
     frequencyMultiplier: 'Description for frequency multiplier',
     distanceMultiplier: 'Description for distance multiplier',
@@ -70,14 +70,14 @@ function Frontend() {
     couplingMultiplier: 'Bad-Good',
   };
 
-const images = {
-  horizontalMultiplier: './funnyimg.gif',
-  verticalMultiplier: './funnyimg.gif',
-  frequencyMultiplier: './funnyimg.gif',
-  distanceMultiplier: './funnyimg.gif',
-  asymmetricMultiplier: './funnyimg.gif',
-  couplingMultiplier: './funnyimg.gif',
-};
+  const images = {
+    horizontalMultiplier: './funnyimg.gif',
+    verticalMultiplier: './funnyimg.gif',
+    frequencyMultiplier: './funnyimg.gif',
+    distanceMultiplier: './funnyimg.gif',
+    asymmetricMultiplier: './funnyimg.gif',
+    couplingMultiplier: './funnyimg.gif',
+  };
 
   // Function to toggle description pop-up
   const toggleDescription = (field) => {
@@ -88,207 +88,219 @@ const images = {
     <div className="container">
       <div className="calculator">
         {/* Your current calculator component */}
-        <img className="photo" src="./nioshadam.jpeg" alt="NIOSH calculator"></img>
-        <div className = "input-container1">
+        <img className="calc-photo" src="./nioshadam.jpeg" alt="NIOSH calculator"></img>
+        <p className="input-label">Horizontal Multiplier</p>
+        <div className="input-container">
           <input
-          className="input"
-          type="number"
-          placeholder="Enter horizontal multiplier"
-          value={horizontalMultiplier}
-          onChange={(e) => setHorizontalMultiplier(e.target.value)}
-        />
-        <FontAwesomeIcon
-              icon={faQuestionCircle}
-              className="question-mark"
-              onClick={() => toggleDescription('horizontalMultiplier')}
-            />
-            {showDescriptions.horizontalMultiplier && (
-              <div className="description-popup">
-                <img src={images.horizontalMultiplier} alt="Description" />
-                <p>{descriptions.horizontalMultiplier}</p>
-              </div>
-            )}
+            className="input"
+            type="number"
+            /* placeholder="Enter horizontal multiplier" */
+            value={horizontalMultiplier}
+            onChange={(e) => setHorizontalMultiplier(e.target.value)}
+          />
+          <FontAwesomeIcon
+            icon={faQuestionCircle}
+            className="question-mark"
+            onClick={() => toggleDescription('horizontalMultiplier')}
+          />
+          {showDescriptions.horizontalMultiplier && (
+            <div className="description-popup">
+              <img src={images.horizontalMultiplier} alt="Description" />
+              <p>{descriptions.horizontalMultiplier}</p>
+            </div>
+          )}
         </div>
 
-        <div className = "input-container2">
+        <p className="input-label">Vertical Multiplier</p>
+        <div className="input-container">
           <input
-          className="input"
-          type="number"
-          placeholder="Enter vertical multiplier"
-          value={verticalMultiplier}
-          onChange={(e) => setVerticalMultiplier(e.target.value)}
-        />
-        <FontAwesomeIcon
-              icon={faQuestionCircle}
-              className="question-mark"
-              onClick={() => toggleDescription('verticalMultiplier')}
-            />
-            {showDescriptions.verticalMultiplier && (
-              <div className="description-popup">
-                <img src={images.verticalMultiplier} alt="Description" />
-                <p>{descriptions.verticalMultiplier}</p>
-              </div>
-            )}
+            className="input"
+            type="number"
+            /* placeholder="Enter vertical multiplier" */
+            value={verticalMultiplier}
+            onChange={(e) => setVerticalMultiplier(e.target.value)}
+          />
+          <FontAwesomeIcon
+            icon={faQuestionCircle}
+            className="question-mark"
+            onClick={() => toggleDescription('verticalMultiplier')}
+          />
+          {showDescriptions.verticalMultiplier && (
+            <div className="description-popup">
+              <img src={images.verticalMultiplier} alt="Description" />
+              <p>{descriptions.verticalMultiplier}</p>
+            </div>
+          )}
         </div>
-        
-        <div className = "input-container3">
+
+        <p className="input-label">Frequency Multiplier</p>
+        <div className="input-container">
           <input
-          className="input"
-          type="number"
-          placeholder="Enter frequency multiplier"
-          value={frequencyMultiplier}
-          onChange={(e) => setFrequencyMultiplier(e.target.value)}
-        />
-        <FontAwesomeIcon
-              icon={faQuestionCircle}
-              className="question-mark"
-              onClick={() => toggleDescription('frequencyMultiplier')}
-            />
-            {showDescriptions.frequencyMultiplier && (
-              <div className="description-popup">
-                <img src={images.frequencyMultiplier} alt="Description" />
-                <p>{descriptions.frequencyMultiplier}</p>
-              </div>
-            )}
+            className="input"
+            type="number"
+            /* placeholder="Enter frequency multiplier" */
+            value={frequencyMultiplier}
+            onChange={(e) => setFrequencyMultiplier(e.target.value)}
+          />
+          <FontAwesomeIcon
+            icon={faQuestionCircle}
+            className="question-mark"
+            onClick={() => toggleDescription('frequencyMultiplier')}
+          />
+          {showDescriptions.frequencyMultiplier && (
+            <div className="description-popup">
+              <img src={images.frequencyMultiplier} alt="Description" />
+              <p>{descriptions.frequencyMultiplier}</p>
+            </div>
+          )}
         </div>
-        
-        <div className = "input-container4">
+
+        <p className="input-label">Distance Multiplier</p>
+        <div className="input-container">
           <input
-          className="input"
-          type="number"
-          placeholder="Enter distance multiplier"
-          value={distanceMultiplier}
-          onChange={(e) => setDistanceMultiplier(e.target.value)}
-        />
-        <FontAwesomeIcon
-              icon={faQuestionCircle}
-              className="question-mark"
-              onClick={() => toggleDescription('distanceMultiplier')}
-            />
-            {showDescriptions.distanceMultiplier && (
-              <div className="description-popup">
-                <img src={images.distanceMultiplier} alt="Description" />
-                <p>{descriptions.distanceMultiplier}</p>
-              </div>
-            )}
+            className="input"
+            type="number"
+            /* placeholder="Enter distance multiplier" */
+            value={distanceMultiplier}
+            onChange={(e) => setDistanceMultiplier(e.target.value)}
+          />
+          <FontAwesomeIcon
+            icon={faQuestionCircle}
+            className="question-mark"
+            onClick={() => toggleDescription('distanceMultiplier')}
+          />
+          {showDescriptions.distanceMultiplier && (
+            <div className="description-popup">
+              <img src={images.distanceMultiplier} alt="Description" />
+              <p>{descriptions.distanceMultiplier}</p>
+            </div>
+          )}
         </div>
-        
-        <div className = "input-container5">
+
+        <p className="input-label">Asymmetric Multiplier</p>
+        <div className="input-container">
           <input
-          className="input"
-          type="number"
-          placeholder="Enter asymmetric multiplier"
-          value={asymmetricMultiplier}
-          onChange={(e) => setAsymmetricMultiplier(e.target.value)}
-        />
-        <FontAwesomeIcon
-              icon={faQuestionCircle}
-              className="question-mark"
-              onClick={() => toggleDescription('asymmetricMultiplier')}
-            />
-            {showDescriptions.asymmetricMultiplier && (
-              <div className="description-popup">
-                <img src={images.asymmetricMultiplier} alt="Description" />
-                <p>{descriptions.asymmetricMultiplier}</p>
-              </div>
-            )}
+            className="input"
+            type="number"
+            /* placeholder="Enter asymmetric multiplier" */
+            value={asymmetricMultiplier}
+            onChange={(e) => setAsymmetricMultiplier(e.target.value)}
+          />
+          <FontAwesomeIcon
+            icon={faQuestionCircle}
+            className="question-mark"
+            onClick={() => toggleDescription('asymmetricMultiplier')}
+          />
+          {showDescriptions.asymmetricMultiplier && (
+            <div className="description-popup">
+              <img src={images.asymmetricMultiplier} alt="Description" />
+              <p>{descriptions.asymmetricMultiplier}</p>
+            </div>
+          )}
         </div>
-        
-        <div className = "input-container6">
+
+        <p className="input-label">Coupling Multiplier</p>
+        <div className="input-container">
           <input
-          className="input"
-          type="number"
-          placeholder="Enter coupling multiplier"
-          value={couplingMultiplier}
-          onChange={(e) => setCouplingMultiplier(e.target.value)}
-        />
-        <FontAwesomeIcon
-              icon={faQuestionCircle}
-              className="question-mark"
-              onClick={() => toggleDescription('couplingMultiplier')}
-            />
-            {showDescriptions.couplingMultiplier && (
-              <div className="description-popup">
-                <img src={images.couplingMultiplier} alt="Description" />
-                <p>{descriptions.couplingMultiplier}</p>
-              </div>
-            )}
+            className="input"
+            type="number"
+            /* placeholder="Enter coupling multiplier" */
+            value={couplingMultiplier}
+            onChange={(e) => setCouplingMultiplier(e.target.value)}
+          />
+          <FontAwesomeIcon
+            icon={faQuestionCircle}
+            className="question-mark"
+            onClick={() => toggleDescription('couplingMultiplier')}
+          />
+          {showDescriptions.couplingMultiplier && (
+            <div className="description-popup">
+              <img src={images.couplingMultiplier} alt="Description" />
+              <p>{descriptions.couplingMultiplier}</p>
+            </div>
+          )}
         </div>
-        
+
         <button className="button" onClick={handleCalculate}>
           Calculate
         </button>
+
         <div className="result"></div>
+
       </div>
+
       <div className="additional-content">
-        <div className="section">
-          <h3 onClick={() => setActiveSection('summary')}>Summary</h3>
-          {activeSection === 'summary' && (
-            <>
-              {(!horizontalMultiplier && !verticalMultiplier && !frequencyMultiplier && !distanceMultiplier && !asymmetricMultiplier && !couplingMultiplier) &&
-                <p>Welcome to the calculator</p>
-              }
-              {/* Show input values after user starts inputting */}
-              {horizontalMultiplier && (
-                <p>Horizontal Multiplier: {horizontalMultiplier}</p>
-              )}
-              {verticalMultiplier && (
-                <p>Vertical Multiplier: {verticalMultiplier}</p>
-              )}
-              {frequencyMultiplier && (
-                <p>Frequency Multiplier: {frequencyMultiplier}</p>
-              )}
-              {distanceMultiplier && (
-                <p>Distance Multiplier: {distanceMultiplier}</p>
-              )}
-              {asymmetricMultiplier && (
-                <p>Asymmetric Multiplier: {asymmetricMultiplier}</p>
-              )}
-              {couplingMultiplier && (
-                <p>Coupling Multiplier: {couplingMultiplier}</p>
-              )}
-              {/* Show calculated result after calculation */}
-              {calculatedResult && (
-                <p>Recommended Weight Limit (RWL): {calculatedResult} kg</p>
-              )}
-            </>
-          )}
+        <div className="ac-titles">
+          <h3 className="ac-label" onClick={() => setActiveSection('summary')}>Summary</h3>
+          <h3 className="ac-label" onClick={() => setActiveSection('analysis')}>Analysis</h3>
+          <h3 className="ac-label" onClick={() => setActiveSection('how-to')}>How To</h3>
+          <h3 className="ac-label" onClick={() => setActiveSection('printout')}>Print Out</h3>
         </div>
-        <div className="section">
-          <h3 onClick={() => setActiveSection('analysis')}>Analysis</h3>
-          {activeSection === 'analysis' && (
+
+        {activeSection === 'summary' && (
+          <div className="section-summary">
+            {(!horizontalMultiplier && !verticalMultiplier && !frequencyMultiplier && !distanceMultiplier && !asymmetricMultiplier && !couplingMultiplier) &&
+              <p>Welcome to the calculator</p>
+            }
+            {/* Show input values after user starts inputting */}
+            {horizontalMultiplier && (
+              <p>Horizontal Multiplier: {horizontalMultiplier}</p>
+            )}
+            {verticalMultiplier && (
+              <p>Vertical Multiplier: {verticalMultiplier}</p>
+            )}
+            {frequencyMultiplier && (
+              <p>Frequency Multiplier: {frequencyMultiplier}</p>
+            )}
+            {distanceMultiplier && (
+              <p>Distance Multiplier: {distanceMultiplier}</p>
+            )}
+            {asymmetricMultiplier && (
+              <p>Asymmetric Multiplier: {asymmetricMultiplier}</p>
+            )}
+            {couplingMultiplier && (
+              <p>Coupling Multiplier: {couplingMultiplier}</p>
+            )}
+            {/* Show calculated result after calculation */}
+            {calculatedResult && (
+              <p>Recommended Weight Limit (RWL): {calculatedResult} kg</p>
+            )}
+          </div>
+        )}
+
+        {activeSection === 'analysis' && (
+          <div className="section-analysis">
             <p>Girilecek</p>
-          )}
-        </div>
-        <div className="section">
-          <h3 onClick={() => setActiveSection('how-to')}>How</h3>
-          {activeSection === 'how-to' && (
+          </div>
+        )}
+
+        {activeSection === 'how-to' && (
+          <div className="section-howto">
             <p>Girilecek</p>
-          )}
-        </div>
-        <div className="section">
-          <h3 onClick={() => setActiveSection('printout')}>Printout</h3>
-          {activeSection === 'printout' && (
-            <>
-              <input
-                type="text"
-                placeholder="Enter your name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Enter your surname"
-                value={surname}
-                onChange={(e) => setSurname(e.target.value)}
-              />
-              <button onClick={generatePDF}>Generate PDF</button>
-            </>
-          )}
-        </div>
+          </div>
+        )}
+
+        {activeSection === 'printout' && (
+          <div className="section-printout">
+            <input className ="prinput"
+              type="text"
+              placeholder="Enter your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input className ="prinput"
+              type="text"
+              placeholder="Enter your surname"
+              value={surname}
+              onChange={(e) => setSurname(e.target.value)}
+            />
+            <button onClick={generatePDF}>Generate PDF</button>
+          </div>
+        )}
+
       </div>
     </div>
-    
+
   );
 }
 
