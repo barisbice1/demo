@@ -17,8 +17,11 @@ function App() {
   };
 
   return (
-    <div className = "momclass" style={{ backgroundImage: "url(/bgimg.gif)" }}>
-      <Navbar className = "navbar-mom" onNavClick={handleNavClick} />
+    <div className="momclass" style={{
+      backgroundImage: "url(/bgimg.gif)",
+      backgroundSize: 'cover'
+    }}>
+      <Navbar className="navbar-mom" onNavClick={handleNavClick} />
       {currentPage === 'home' && <Home />}
       {currentPage === 'calculate' && <Frontend />}
       <Footer />
