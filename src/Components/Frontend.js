@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 import React, { useState } from 'react';
 import './style.css'; // Import the CSS file
 /* import Navbar from './Navbar'; // Import the Navbar component */
@@ -15,6 +16,89 @@ function Frontend() {
   const [couplingMultiplier, setCouplingMultiplier] = useState('');
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
+  const [showCouplingTextbox, setShowCouplinhgTextbox] = useState(false);
+  const [showGroup2, setShowGroup2] = useState(false);
+  const [showGroup3, setShowGroup3] = useState(false);
+  const [showGroup4, setShowGroup4] = useState(false);
+  const [showGroup5, setShowGroup5] = useState(false);
+  const [showGroup6, setShowGroup6] = useState(false);
+  const [showVerticalWarning, setShowVerticalWarning] = useState(false);
+  const [couplingQuality, setCouplingQuality] = useState('');
+
+  const couplingCalculator = (couplingType, verticalMultiplier) => {
+    if (verticalMultiplier === '') {
+      if (showVerticalWarning === false) {
+        setShowVerticalWarning(true);
+      }
+    }
+    else {
+      if (showVerticalWarning === true) {
+        setShowVerticalWarning(false);
+      }
+
+      switch (couplingType) {
+        case 'poor': {
+          setCouplingQuality('POOR');
+          setCouplingMultiplier(0.90);
+          break;
+        }
+        case 'fair': {
+          setCouplingQuality('FAIR');
+          if(verticalMultiplier < 75){
+            setCouplingMultiplier(0.95);
+          }
+          else{
+            setCouplingMultiplier(1.00);
+          }
+          break;
+        }
+        case 'good':{
+          setCouplingQuality('GOOD');
+          setCouplingMultiplier(1.00);
+          break;
+        }
+        default:
+          setCouplingMultiplier(0, 90);
+
+      }
+      if (showCouplingTextbox === false) {
+        setShowCouplinhgTextbox(true);
+      }
+    }
+
+  }
+
+  /* const handleCouplingMultiplier = () => {
+    const isContainer = window.confirm("Is the object being lifted a Container?");
+    if (isContainer) {
+      const isOptimalContainer = window.confirm("Optimal Container?");
+      if (!isOptimalContainer) {
+        setCouplingMultiplier(0.90); // Poor coupling multiplier
+      } else {
+        const isOptimalHandles = window.confirm("Optimal Handles?");
+        if (isOptimalHandles) {
+          setCouplingMultiplier(1.00); // Good coupling multiplier
+        } else {
+          const isFingersFlexed = window.confirm("Fingers flexed 90 degrees?");
+          setCouplingMultiplier(isFingersFlexed ? 0.95 : 0.90); // Fair or poor coupling multiplier
+        }
+      }
+    } else {
+      const isBulkyObject = window.confirm("Is the object being lifted a Bulky Object?");
+      if (isBulkyObject) {
+        setCouplingMultiplier(0.90); // Poor coupling multiplier
+      } else {
+        const isOptimalGrip = window.confirm("Optimal Grip?");
+        if (isOptimalGrip) {
+          setCouplingMultiplier(1.00); // Good coupling multiplier
+        } else {
+          const isFingersFlexed = window.confirm("Fingers flexed 90 degrees?");
+          setCouplingMultiplier(isFingersFlexed ? 0.95 : 0.90); // Fair or poor coupling multiplier
+        }
+      }
+    }
+  }; */
+
 
   // State variable to store the calculated result
   const [calculatedResult, setCalculatedResult] = useState(null);
@@ -38,19 +122,18 @@ function Frontend() {
   const generatePDF = () => {
     const doc = new jsPDF();
     doc.text('Inputs:', 10, 10);
-    doc.text(`Horizontal Multiplier: ${horizontalMultiplier}`, 10, 20);
-    doc.text(`Vertical Multiplier: ${verticalMultiplier}`, 10, 30);
-    doc.text(`Frequency Multiplier: ${frequencyMultiplier}`, 10, 40);
-    doc.text(`Distance Multiplier: ${distanceMultiplier}`, 10, 50);
-    doc.text(`Asymmetric Multiplier: ${asymmetricMultiplier}`, 10, 60);
-    doc.text(`Coupling Multiplier: ${couplingMultiplier}`, 10, 70);
+    doc.text("Horizontal Multiplier: ${horizontalMultiplier}", 10, 20);
+    doc.text("Vertical Multiplier: ${verticalMultiplier}", 10, 30);
+    doc.text("Frequency Multiplier: ${frequencyMultiplier}", 10, 40);
+    doc.text("Distance Multiplier: ${distanceMultiplier}", 10, 50);
+    doc.text("Asymmetric Multiplier: ${asymmetricMultiplier}", 10, 60);
+    doc.text("Coupling Multiplier: ${couplingMultiplier}", 10, 70);
 
-    doc.text(`Recommended Weight Limit (RWL): ${calculatedResult} kg`, 10, 90);
-    doc.text(`Name: ${name} ${surname}`, 10, 100);
+    doc.text("Recommended Weight Limit (RWL): ${calculatedResult} kg", 10, 90);
+    doc.text("Name: ${name} ${surname}", 10, 100);
     doc.save('niosh_calculator.pdf');
   };
 
-  // State variables to manage visibility of description pop-ups
   const [showDescriptions, setShowDescriptions] = useState({
     horizontalMultiplier: false,
     verticalMultiplier: false,
@@ -60,7 +143,6 @@ function Frontend() {
     couplingMultiplier: false,
   });
 
-  // Descriptions for each multiplier
   const descriptions = {
     horizontalMultiplier: 'This is what you put here.',
     verticalMultiplier: 'This is what you put here.',
@@ -200,26 +282,289 @@ function Frontend() {
         </div>
 
         <p className="input-label">Coupling Multiplier</p>
-        <div className="input-container">
-          <input
-            className="input"
-            type="number"
-            /* placeholder="Enter coupling multiplier" */
-            value={couplingMultiplier}
-            onChange={(e) => setCouplingMultiplier(e.target.value)}
-          />
-          <FontAwesomeIcon
-            icon={faQuestionCircle}
-            className="question-mark"
-            onClick={() => toggleDescription('couplingMultiplier')}
-          />
-          {showDescriptions.couplingMultiplier && (
-            <div className="description-popup">
-              <img src={images.couplingMultiplier} alt="Description" />
-              <p>{descriptions.couplingMultiplier}</p>
-            </div>
-          )}
+
+
+
+        <div className="coupling-decide-group" id="group1">
+          <div className="coupling-decide">
+            <input type="radio"
+              className="coupling-radio"
+              id="container"
+              name="object-type"
+              value="container"
+            />
+            <label for="container"
+              className="radio-label"
+              onClick={() => {
+                if (showGroup2 === false) {
+                  setShowGroup2(true);
+                }
+                if (showGroup4 === true) {
+                  setShowGroup4(false);
+                }
+                if (showGroup5 === true) {
+                  setShowGroup5(false);
+                }
+                if (showGroup6 === true) {
+                  setShowGroup6(false);
+                }
+              }
+              }>Container</label>
+          </div>
+          <div className="coupling-decide">
+            <input type="radio"
+              className="coupling-radio"
+              id="loose-object"
+              name="object-type"
+              value="loose-object"
+            />
+            <label for="loose-object"
+              className="radio-label"
+              onClick={() => {
+                if (showGroup4 === false) {
+                  setShowGroup4(true);
+                }
+                if (showGroup2 === true) {
+                  setShowGroup2(false);
+                }
+                if (showGroup3 === true) {
+                  setShowGroup3(false);
+                }
+                if (showGroup6 === true) {
+                  setShowGroup6(false);
+                }
+              }
+              }>Loose Object</label>
+          </div>
         </div>
+
+        {showGroup2 &&
+          <div className="coupling-decide-group" id="group2">
+            <div className="coupling-decide">
+              <input type="radio"
+                className="coupling-radio"
+                id="optimal-container"
+                name="container-optimal"
+                value="optimal-container"
+              />
+              <label for="optimal-container"
+                className="radio-label"
+                onClick={() => {
+                  if (showGroup3 === false) {
+                    setShowGroup3(true)
+                  }
+                }
+                }>Container Is Optimal</label>
+            </div>
+            <div className="coupling-decide">
+              <input type="radio"
+                className="coupling-radio"
+                id="unoptimal-container"
+                name="container-optimal"
+                value="unoptimal-container"
+              />
+              <label for="unoptimal-container"
+                className="radio-label"
+                onClick={() => {
+                  if (showGroup3 === true) {
+                    setShowGroup3(false);
+                  }
+                  if (showGroup6 === true) {
+                    setShowGroup6(false);
+                  }
+                  if (showGroup3 === false) {
+                    couplingCalculator('poor', verticalMultiplier);
+                  }
+                }
+                }>Container Is Not Optimal</label>
+            </div>
+          </div>
+        }
+
+        {showGroup3 && showGroup2 &&
+          <div className="coupling-decide-group" id="group3">
+            <div className="coupling-decide">
+              <input type="radio"
+                className="coupling-radio"
+                id="optimal-handles"
+                name="handles-optimal"
+                value="optimal-handles"
+              />
+              <label for="optimal-handles"
+                className="radio-label"
+                onClick={() => {
+                  if (showGroup6 === true) {
+                    setShowGroup6(false);
+                  }
+                  if (showGroup6 === false) {
+                    couplingCalculator('good', verticalMultiplier)
+                  }
+                }
+                }>Handles Are Optimal</label>
+            </div>
+            <div className="coupling-decide">
+              <input type="radio"
+                className="coupling-radio"
+                id="unoptimal-handles"
+                name="handles-optimal"
+                value="unoptimal-handles"
+              />
+              <label for="unoptimal-handles"
+                className="radio-label"
+                onClick={() => {
+                  if (showGroup6 === false) {
+                    setShowGroup6(true)
+                  }
+                }
+                } >Handles Are Not Optimal</label>
+            </div>
+          </div>
+        }
+
+        {showGroup4 &&
+          <div className="coupling-decide-group" id="group4">
+            <div className="coupling-decide">
+              <input type="radio"
+                className="coupling-radio"
+                id="bulky-object"
+                name="object-bulky"
+                value="bulky-object"
+              />
+              <label for="bulky-object"
+                className="radio-label"
+                onClick={() => {
+                  if (showGroup5 === true) {
+                    setShowGroup5(false);
+                  }
+                  if (showGroup6 === true) {
+                    setShowGroup6(false);
+                  }
+                  if (showGroup5 === false) {
+                    couplingCalculator('poor', verticalMultiplier);
+                  }
+                }
+                } >Object Is Bulky</label>
+            </div>
+            <div className="coupling-decide">
+              <input type="radio"
+                className="coupling-radio"
+                id="non-bulky-object"
+                name="object-bulky"
+                value="non-bulky-object"
+              />
+              <label for="non-bulky-object"
+                className="radio-label"
+                onClick={() => {
+                  if (showGroup5 === false) {
+                    setShowGroup5(true);
+                  }
+                }
+                } >Object Is Not Bulky</label>
+            </div>
+          </div>
+        }
+
+        {showGroup5 && showGroup4 &&
+          <div className="coupling-decide-group" id="group5">
+            <div className="coupling-decide">
+              <input type="radio"
+                className="coupling-radio"
+                id="optimal-grip"
+                name="grip-optimal"
+                value="optimal-grip"
+              />
+              <label for="optimal-grip"
+                className="radio-label"
+                onClick={() => {
+                  if (showGroup6 === true) {
+                    setShowGroup6(false);
+                  }
+                  if (showGroup5 === true) {
+                    couplingCalculator('good', verticalMultiplier)
+                  }
+                }
+                } >Grip Is Optimal</label>
+            </div>
+            <div className="coupling-decide">
+              <input type="radio"
+                className="coupling-radio"
+                id="non-optimal-grip"
+                name="grip-optimal"
+                value="non-optimal-grip"
+              />
+              <label for="non-optimal-grip"
+                className="radio-label"
+                onClick={() => {
+                  if (setShowGroup6 === false) {
+                    setShowGroup6(true)
+                  }
+                }
+                } >Grip Is Not Optimal</label>
+            </div>
+          </div>
+        }
+        {showGroup6 && (showGroup3 || showGroup5) &&
+          <div className="coupling-decide-group" id="group6">
+            <div className="coupling-decide">
+              <input type="radio"
+                className="coupling-radio"
+                id="fingers-flexed"
+                name="fingers-flex"
+                value="fingers-flexed"
+              />
+              <label for="fingers-flexed"
+                className="radio-label"
+                onClick={() => {
+                  if (showGroup6 === true) {
+                    couplingCalculator('fair', verticalMultiplier)
+                  }
+                }
+                } >Fingers Are Flexed 90 Degrees</label>
+            </div>
+            <div className="coupling-decide">
+              <input type="radio"
+                className="coupling-radio"
+                id="fingers-not-flexed"
+                name="fingers-flex"
+                value="fingers-not-flexed"
+              />
+              <label for="fingers-not-flexed"
+                className="radio-label"
+                onClick={() => {
+                  if (showGroup6 === true) {
+                    couplingCalculator('poor', verticalMultiplier)
+                  }
+                }
+                } >Fingers Are Not Flexed 90 Degrees</label>
+            </div>
+          </div>
+        }
+
+        {showVerticalWarning && <p className='common-warning'>Please fill Vertical Multiplier section for calculation of Coupling Multiplier.</p>}
+
+        {couplingQuality && <p className='common-warning'>Coupling Quality: {couplingQuality}</p>}
+
+        {showCouplingTextbox &&
+          <div className="input-container">
+            <input
+              className="input"
+              type="text"
+              value={couplingMultiplier}
+              readOnly
+            />
+            <FontAwesomeIcon
+              icon={faQuestionCircle}
+              className="question-mark"
+              onClick={() => toggleDescription('couplingMultiplier')}
+            />
+            {showDescriptions.couplingMultiplier && (
+              <div className="description-popup">
+                <img src={images.couplingMultiplier} alt="Description" />
+                <p>{descriptions.couplingMultiplier}</p>
+              </div>
+            )}
+          </div>
+        }
 
         <button className="button" onClick={handleCalculate}>
           Calculate
@@ -242,7 +587,6 @@ function Frontend() {
             {(!horizontalMultiplier && !verticalMultiplier && !frequencyMultiplier && !distanceMultiplier && !asymmetricMultiplier && !couplingMultiplier) &&
               <p>Welcome to the calculator</p>
             }
-            {/* Show input values after user starts inputting */}
             {horizontalMultiplier && (
               <p>Horizontal Multiplier: {horizontalMultiplier}</p>
             )}
@@ -282,13 +626,13 @@ function Frontend() {
 
         {activeSection === 'printout' && (
           <div className="section-printout">
-            <input className ="prinput"
+            <input className="prinput"
               type="text"
               placeholder="Enter your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <input className ="prinput"
+            <input className="prinput"
               type="text"
               placeholder="Enter your surname"
               value={surname}
