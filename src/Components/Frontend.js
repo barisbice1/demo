@@ -171,16 +171,7 @@ function Frontend() {
       <div className="calculator">
         {/* Your current calculator component */}
         <img className="calc-photo" src="./nioshadam.jpeg" alt="NIOSH calculator"></img>
-        <p className="input-label">Horizontal Multiplier</p>
-        <div className="input-container">
-          <input
-            className="input"
-            type="number"
-            /* placeholder="Enter horizontal multiplier" */
-            value={horizontalMultiplier}
-            onChange={(e) => setHorizontalMultiplier(e.target.value)}
-          />
-          <FontAwesomeIcon
+        <p className="input-label">Horizontal Multiplier         <FontAwesomeIcon
             icon={faQuestionCircle}
             className="question-mark"
             onClick={() => toggleDescription('horizontalMultiplier')}
@@ -190,19 +181,22 @@ function Frontend() {
               <img src={images.horizontalMultiplier} alt="Description" />
               <p>{descriptions.horizontalMultiplier}</p>
             </div>
-          )}
-        </div>
+          )}</p> 
 
-        <p className="input-label">Vertical Multiplier</p>
+        
+        
         <div className="input-container">
           <input
             className="input"
             type="number"
-            /* placeholder="Enter vertical multiplier" */
-            value={verticalMultiplier}
-            onChange={(e) => setVerticalMultiplier(e.target.value)}
+            /* placeholder="Enter horizontal multiplier" */
+            value={horizontalMultiplier}
+            onChange={(e) => setHorizontalMultiplier(e.target.value)}
           />
-          <FontAwesomeIcon
+
+        </div>
+
+        <p className="input-label">Vertical Multiplier           <FontAwesomeIcon
             icon={faQuestionCircle}
             className="question-mark"
             onClick={() => toggleDescription('verticalMultiplier')}
@@ -212,19 +206,19 @@ function Frontend() {
               <img src={images.verticalMultiplier} alt="Description" />
               <p>{descriptions.verticalMultiplier}</p>
             </div>
-          )}
-        </div>
-
-        <p className="input-label">Frequency Multiplier</p>
+          )}</p>
         <div className="input-container">
           <input
             className="input"
             type="number"
-            /* placeholder="Enter frequency multiplier" */
-            value={frequencyMultiplier}
-            onChange={(e) => setFrequencyMultiplier(e.target.value)}
+            /* placeholder="Enter vertical multiplier" */
+            value={verticalMultiplier}
+            onChange={(e) => setVerticalMultiplier(e.target.value)}
           />
-          <FontAwesomeIcon
+
+        </div>
+
+        <p className="input-label">Frequency Multiplier           <FontAwesomeIcon
             icon={faQuestionCircle}
             className="question-mark"
             onClick={() => toggleDescription('frequencyMultiplier')}
@@ -234,19 +228,19 @@ function Frontend() {
               <img src={images.frequencyMultiplier} alt="Description" />
               <p>{descriptions.frequencyMultiplier}</p>
             </div>
-          )}
-        </div>
-
-        <p className="input-label">Distance Multiplier</p>
+          )}</p>
         <div className="input-container">
           <input
             className="input"
             type="number"
-            /* placeholder="Enter distance multiplier" */
-            value={distanceMultiplier}
-            onChange={(e) => setDistanceMultiplier(e.target.value)}
+            /* placeholder="Enter frequency multiplier" */
+            value={frequencyMultiplier}
+            onChange={(e) => setFrequencyMultiplier(e.target.value)}
           />
-          <FontAwesomeIcon
+
+        </div>
+
+        <p className="input-label">Distance Multiplier           <FontAwesomeIcon
             icon={faQuestionCircle}
             className="question-mark"
             onClick={() => toggleDescription('distanceMultiplier')}
@@ -256,19 +250,19 @@ function Frontend() {
               <img src={images.distanceMultiplier} alt="Description" />
               <p>{descriptions.distanceMultiplier}</p>
             </div>
-          )}
-        </div>
-
-        <p className="input-label">Asymmetric Multiplier</p>
+          )}</p>
         <div className="input-container">
           <input
             className="input"
             type="number"
-            /* placeholder="Enter asymmetric multiplier" */
-            value={asymmetricMultiplier}
-            onChange={(e) => setAsymmetricMultiplier(e.target.value)}
+            /* placeholder="Enter distance multiplier" */
+            value={distanceMultiplier}
+            onChange={(e) => setDistanceMultiplier(e.target.value)}
           />
-          <FontAwesomeIcon
+
+        </div>
+
+        <p className="input-label">Asymmetric Multiplier           <FontAwesomeIcon
             icon={faQuestionCircle}
             className="question-mark"
             onClick={() => toggleDescription('asymmetricMultiplier')}
@@ -278,10 +272,29 @@ function Frontend() {
               <img src={images.asymmetricMultiplier} alt="Description" />
               <p>{descriptions.asymmetricMultiplier}</p>
             </div>
-          )}
+          )}</p>
+        <div className="input-container">
+          <input
+            className="input"
+            type="number"
+            /* placeholder="Enter asymmetric multiplier" */
+            value={asymmetricMultiplier}
+            onChange={(e) => setAsymmetricMultiplier(e.target.value)}
+          />
+
         </div>
 
-        <p className="input-label">Coupling Multiplier</p>
+        <p className="input-label">Coupling Multiplier             <FontAwesomeIcon
+              icon={faQuestionCircle}
+              className="question-mark"
+              onClick={() => toggleDescription('couplingMultiplier')}
+            />
+            {showDescriptions.couplingMultiplier && (
+              <div className="description-popup">
+                <img src={images.couplingMultiplier} alt="Description" />
+                <p>{descriptions.couplingMultiplier}</p>
+              </div>
+            )}</p>
 
 
 
@@ -552,17 +565,7 @@ function Frontend() {
               value={couplingMultiplier}
               readOnly
             />
-            <FontAwesomeIcon
-              icon={faQuestionCircle}
-              className="question-mark"
-              onClick={() => toggleDescription('couplingMultiplier')}
-            />
-            {showDescriptions.couplingMultiplier && (
-              <div className="description-popup">
-                <img src={images.couplingMultiplier} alt="Description" />
-                <p>{descriptions.couplingMultiplier}</p>
-              </div>
-            )}
+
           </div>
         }
 
@@ -576,10 +579,10 @@ function Frontend() {
 
       <div className="additional-content">
         <div className="ac-titles">
-          <h3 className="ac-label" onClick={() => setActiveSection('summary')}>Summary</h3>
-          <h3 className="ac-label" onClick={() => setActiveSection('analysis')}>Analysis</h3>
-          <h3 className="ac-label" onClick={() => setActiveSection('how-to')}>How To</h3>
-          <h3 className="ac-label" onClick={() => setActiveSection('printout')}>Print Out</h3>
+          <h3 className={`ac-label ${activeSection === 'summary' ? 'active' : ''}`} onClick={() => setActiveSection('summary')}>Summary</h3>
+          <h3 className={`ac-label ${activeSection === 'analysis' ? 'active' : ''}`} onClick={() => setActiveSection('analysis')}>Analysis</h3>
+          <h3 className={`ac-label ${activeSection === 'how-to' ? 'active' : ''}`} onClick={() => setActiveSection('how-to')}>How To</h3>
+          <h3 className={`ac-label ${activeSection === 'printout' ? 'active' : ''}`} onClick={() => setActiveSection('printout')}>Print Out</h3>
         </div>
 
         {activeSection === 'summary' && (
