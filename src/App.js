@@ -1,12 +1,13 @@
 // App.js
 
 import React, { useState } from 'react';
-import Frontend from './Components/Frontend'; // Import your main component
-import Navbar from './Components/Navbar'; // Import the Navbar component
-import Home from './Components/Home'; // Import the Home component
-import './App.css'; // Import the CSS file for global styles
+import Frontend from './Components/Frontend';
+import Navbar from './Components/Navbar';
+import Home from './Components/Home';
+import './App.css';
 import Footer from './Components/Footer';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+/* import background from './bgimg.gif'; */
 
 function App() {
   const [currentPage, setCurrentPage] = useState('calculate');
@@ -16,7 +17,7 @@ function App() {
   };
 
   return (
-    <div className = "momclass">
+    <div className = "momclass" style={{ backgroundImage: "url(/bgimg.gif)" }}>
       <Navbar className = "navbar-mom" onNavClick={handleNavClick} />
       {currentPage === 'home' && <Home />}
       {currentPage === 'calculate' && <Frontend />}

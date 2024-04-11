@@ -42,6 +42,7 @@
   flex-direction: column;
  /*  background-image: url(https://hizliresim.com/85xvd6t);
   background-image: 'bgimg.gif'; */
+  /* background-image: 'url(/bgimg.gif)'; */
 }
 
 .navbar-mom {
