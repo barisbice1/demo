@@ -1,5 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
-import React, { useState } from 'react';
+import React, { useState, /* useRef, useEffect */ } from 'react';
 import './style.css'; // Import the CSS file
 /* import Navbar from './Navbar'; // Import the Navbar component */
 import jsPDF from 'jspdf';
@@ -25,6 +25,43 @@ function Frontend() {
   const [showVerticalWarning, setShowVerticalWarning] = useState(false);
   const [couplingQuality, setCouplingQuality] = useState('');
 
+  const [showDescriptions, setShowDescriptions] = useState({
+    horizontalMultiplier: false,
+    verticalMultiplier: false,
+    frequencyMultiplier: false,
+    distanceMultiplier: false,
+    asymmetricMultiplier: false,
+    couplingMultiplier: false,
+  });
+
+  /* const buttonRefs = useRef([]);
+  const descriptionPopupRefs = useRef([]);
+
+  useEffect(() => {
+    const positionDescriptionPopup = (popupNumber) => {
+      const buttonRect = buttonRefs.current[popupNumber].getBoundingClientRect();
+      const descriptionPopupRect = descriptionPopupRefs.current[popupNumber].getBoundingClientRect();
+
+      // Position the description popup relative to the button
+      descriptionPopupRefs.current[popupNumber].style.top = `${buttonRect.bottom}px`;
+      descriptionPopupRefs.current[popupNumber].style.left = `${buttonRect.left}px`;
+    };
+
+    const handleResize = () => {
+      Object.keys(showDescriptions).forEach((popupNumber) => {
+        if (showDescriptions[popupNumber]) {
+          positionDescriptionPopup(popupNumber);
+        }
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [showDescriptions]); */
+
   const couplingCalculator = (couplingType, verticalMultiplier) => {
     if (verticalMultiplier === '') {
       if (showVerticalWarning === false) {
@@ -44,15 +81,15 @@ function Frontend() {
         }
         case 'fair': {
           setCouplingQuality('FAIR');
-          if(verticalMultiplier < 75){
+          if (verticalMultiplier < 75) {
             setCouplingMultiplier(0.95);
           }
-          else{
+          else {
             setCouplingMultiplier(1.00);
           }
           break;
         }
-        case 'good':{
+        case 'good': {
           setCouplingQuality('GOOD');
           setCouplingMultiplier(1.00);
           break;
@@ -67,37 +104,6 @@ function Frontend() {
     }
 
   }
-
-  /* const handleCouplingMultiplier = () => {
-    const isContainer = window.confirm("Is the object being lifted a Container?");
-    if (isContainer) {
-      const isOptimalContainer = window.confirm("Optimal Container?");
-      if (!isOptimalContainer) {
-        setCouplingMultiplier(0.90); // Poor coupling multiplier
-      } else {
-        const isOptimalHandles = window.confirm("Optimal Handles?");
-        if (isOptimalHandles) {
-          setCouplingMultiplier(1.00); // Good coupling multiplier
-        } else {
-          const isFingersFlexed = window.confirm("Fingers flexed 90 degrees?");
-          setCouplingMultiplier(isFingersFlexed ? 0.95 : 0.90); // Fair or poor coupling multiplier
-        }
-      }
-    } else {
-      const isBulkyObject = window.confirm("Is the object being lifted a Bulky Object?");
-      if (isBulkyObject) {
-        setCouplingMultiplier(0.90); // Poor coupling multiplier
-      } else {
-        const isOptimalGrip = window.confirm("Optimal Grip?");
-        if (isOptimalGrip) {
-          setCouplingMultiplier(1.00); // Good coupling multiplier
-        } else {
-          const isFingersFlexed = window.confirm("Fingers flexed 90 degrees?");
-          setCouplingMultiplier(isFingersFlexed ? 0.95 : 0.90); // Fair or poor coupling multiplier
-        }
-      }
-    }
-  }; */
 
 
   // State variable to store the calculated result
@@ -134,14 +140,6 @@ function Frontend() {
     doc.save('niosh_calculator.pdf');
   };
 
-  const [showDescriptions, setShowDescriptions] = useState({
-    horizontalMultiplier: false,
-    verticalMultiplier: false,
-    frequencyMultiplier: false,
-    distanceMultiplier: false,
-    asymmetricMultiplier: false,
-    couplingMultiplier: false,
-  });
 
   const descriptions = {
     horizontalMultiplier: 'This is what you put here.',
@@ -171,20 +169,21 @@ function Frontend() {
       <div className="calculator">
         {/* Your current calculator component */}
         <img className="calc-photo" src="./nioshadam.jpeg" alt="NIOSH calculator"></img>
-        <p className="input-label">Horizontal Multiplier         <FontAwesomeIcon
+
+        <div className='desc-title'>
+          <p className="input-label">Horizontal Multiplier         <FontAwesomeIcon
             icon={faQuestionCircle}
             className="question-mark"
-            onClick={() => toggleDescription('horizontalMultiplier')}
-          />
-          {showDescriptions.horizontalMultiplier && (
-            <div className="description-popup">
-              <img src={images.horizontalMultiplier} alt="Description" />
-              <p>{descriptions.horizontalMultiplier}</p>
-            </div>
-          )}</p> 
-
-        
-        
+            onMouseEnter={() => toggleDescription('horizontalMultiplier')}
+            onMouseLeave={() => toggleDescription('horizontalMultiplier')}
+          /></p>
+            {showDescriptions.horizontalMultiplier && (
+              <div className="description-popup">
+                <img src={images.horizontalMultiplier} alt="Description" />
+                <p>{descriptions.horizontalMultiplier}</p>
+              </div>
+            )}
+        </div>
         <div className="input-container">
           <input
             className="input"
@@ -193,20 +192,22 @@ function Frontend() {
             value={horizontalMultiplier}
             onChange={(e) => setHorizontalMultiplier(e.target.value)}
           />
-
         </div>
 
-        <p className="input-label">Vertical Multiplier           <FontAwesomeIcon
+        <div className='desc-title'>
+          <p className="input-label">Vertical Multiplier           <FontAwesomeIcon
             icon={faQuestionCircle}
             className="question-mark"
-            onClick={() => toggleDescription('verticalMultiplier')}
-          />
-          {showDescriptions.verticalMultiplier && (
-            <div className="description-popup">
-              <img src={images.verticalMultiplier} alt="Description" />
-              <p>{descriptions.verticalMultiplier}</p>
-            </div>
-          )}</p>
+            onMouseEnter={() => toggleDescription('verticalMultiplier')}
+            onMouseLeave={() => toggleDescription('verticalMultiplier')}
+          /></p>
+            {showDescriptions.verticalMultiplier && (
+              <div className="description-popup">
+                <img src={images.verticalMultiplier} alt="Description" />
+                <p>{descriptions.verticalMultiplier}</p>
+              </div>
+            )}
+        </div>
         <div className="input-container">
           <input
             className="input"
@@ -215,20 +216,22 @@ function Frontend() {
             value={verticalMultiplier}
             onChange={(e) => setVerticalMultiplier(e.target.value)}
           />
-
         </div>
 
-        <p className="input-label">Frequency Multiplier           <FontAwesomeIcon
+        <div className='desc-title'>
+          <p className="input-label">Frequency Multiplier           <FontAwesomeIcon
             icon={faQuestionCircle}
             className="question-mark"
-            onClick={() => toggleDescription('frequencyMultiplier')}
-          />
-          {showDescriptions.frequencyMultiplier && (
-            <div className="description-popup">
-              <img src={images.frequencyMultiplier} alt="Description" />
-              <p>{descriptions.frequencyMultiplier}</p>
-            </div>
-          )}</p>
+            onMouseEnter={() => toggleDescription('frequencyMultiplier')}
+            onMouseLeave={() => toggleDescription('frequencyMultiplier')}
+          /></p>
+            {showDescriptions.frequencyMultiplier && (
+              <div className="description-popup">
+                <img src={images.frequencyMultiplier} alt="Description" />
+                <p>{descriptions.frequencyMultiplier}</p>
+              </div>
+            )}
+        </div>
         <div className="input-container">
           <input
             className="input"
@@ -237,20 +240,22 @@ function Frontend() {
             value={frequencyMultiplier}
             onChange={(e) => setFrequencyMultiplier(e.target.value)}
           />
-
         </div>
 
-        <p className="input-label">Distance Multiplier           <FontAwesomeIcon
+        <div className='desc-title'>
+          <p className="input-label">Distance Multiplier           <FontAwesomeIcon
             icon={faQuestionCircle}
             className="question-mark"
-            onClick={() => toggleDescription('distanceMultiplier')}
-          />
-          {showDescriptions.distanceMultiplier && (
-            <div className="description-popup">
-              <img src={images.distanceMultiplier} alt="Description" />
-              <p>{descriptions.distanceMultiplier}</p>
-            </div>
-          )}</p>
+            onMouseEnter={() => toggleDescription('distanceMultiplier')}
+            onMouseLeave={() => toggleDescription('distanceMultiplier')}
+          /></p>
+            {showDescriptions.distanceMultiplier && (
+              <div className="description-popup">
+                <img src={images.distanceMultiplier} alt="Description" />
+                <p>{descriptions.distanceMultiplier}</p>
+              </div>
+            )}
+        </div>
         <div className="input-container">
           <input
             className="input"
@@ -259,20 +264,22 @@ function Frontend() {
             value={distanceMultiplier}
             onChange={(e) => setDistanceMultiplier(e.target.value)}
           />
-
         </div>
 
-        <p className="input-label">Asymmetric Multiplier           <FontAwesomeIcon
+        <div className='desc-title'>
+          <p className="input-label">Asymmetric Multiplier           <FontAwesomeIcon
             icon={faQuestionCircle}
             className="question-mark"
-            onClick={() => toggleDescription('asymmetricMultiplier')}
-          />
+            onMouseEnter={() => toggleDescription('asymmetricMultiplier')}
+            onMouseLeave={() => toggleDescription('asymmetricMultiplier')}
+          /></p>
           {showDescriptions.asymmetricMultiplier && (
             <div className="description-popup">
               <img src={images.asymmetricMultiplier} alt="Description" />
               <p>{descriptions.asymmetricMultiplier}</p>
             </div>
-          )}</p>
+          )}
+        </div>
         <div className="input-container">
           <input
             className="input"
@@ -281,22 +288,23 @@ function Frontend() {
             value={asymmetricMultiplier}
             onChange={(e) => setAsymmetricMultiplier(e.target.value)}
           />
-
         </div>
 
-        <p className="input-label">Coupling Multiplier             <FontAwesomeIcon
-              icon={faQuestionCircle}
-              className="question-mark"
-              onClick={() => toggleDescription('couplingMultiplier')}
-            />
-            {showDescriptions.couplingMultiplier && (
-              <div className="description-popup">
-                <img src={images.couplingMultiplier} alt="Description" />
-                <p>{descriptions.couplingMultiplier}</p>
-              </div>
-            )}</p>
-
-
+        <div className='desc-title'>
+          <p className="input-label">Coupling Multiplier             <FontAwesomeIcon
+            icon={faQuestionCircle}
+            className="question-mark"
+            onMouseEnter={() => toggleDescription('couplingMultiplier')}
+            onMouseLeave={() => toggleDescription('couplingMultiplier')}
+          />
+          </p>
+          {showDescriptions.couplingMultiplier && (
+            <div className="description-popup">
+              <img src={images.couplingMultiplier} alt="Description" />
+              <p>{descriptions.couplingMultiplier}</p>
+            </div>
+          )}
+        </div>
 
         <div className="coupling-decide-group" id="group1">
           <div className="coupling-decide">
@@ -508,7 +516,7 @@ function Frontend() {
               <label for="non-optimal-grip"
                 className="radio-label"
                 onClick={() => {
-                  if (setShowGroup6 === false) {
+                  if (showGroup6 === false) {
                     setShowGroup6(true)
                   }
                 }
