@@ -1,5 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
-import React, { useState, /* useRef, useEffect */ } from 'react';
+import React, { useState, useRef, useEffect  } from 'react';
 import './style.css'; // Import the CSS file
 /* import Navbar from './Navbar'; // Import the Navbar component */
 import jsPDF from 'jspdf';
@@ -33,6 +33,21 @@ function Frontend() {
     asymmetricMultiplier: false,
     couplingMultiplier: false,
   });
+  const horizontalMultiplierRef = useRef(null);
+  const verticalMultiplierRef = useRef(null);
+  const frequencyMultiplierRef = useRef(null);
+  const distanceMultiplierRef = useRef(null);
+  const asymmetricMultiplierRef = useRef(null);
+  const couplingMultiplierRef = useRef(null);
+  const nameRef = useRef(null);
+  const surnameRef = useRef(null);
+
+  const handleKeyPress = (event, nextRef) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      nextRef?.current?.focus();
+    }
+  };
 
   /* const buttonRefs = useRef([]);
   const descriptionPopupRefs = useRef([]);
@@ -128,18 +143,17 @@ function Frontend() {
   const generatePDF = () => {
     const doc = new jsPDF();
     doc.text('Inputs:', 10, 10);
-    doc.text("Horizontal Multiplier: ${horizontalMultiplier}", 10, 20);
-    doc.text("Vertical Multiplier: ${verticalMultiplier}", 10, 30);
-    doc.text("Frequency Multiplier: ${frequencyMultiplier}", 10, 40);
-    doc.text("Distance Multiplier: ${distanceMultiplier}", 10, 50);
-    doc.text("Asymmetric Multiplier: ${asymmetricMultiplier}", 10, 60);
-    doc.text("Coupling Multiplier: ${couplingMultiplier}", 10, 70);
-
-    doc.text("Recommended Weight Limit (RWL): ${calculatedResult} kg", 10, 90);
-    doc.text("Name: ${name} ${surname}", 10, 100);
+    doc.text(`Horizontal Multiplier: ${horizontalMultiplier}`, 10, 20);
+    doc.text(`Vertical Multiplier: ${verticalMultiplier}`, 10, 30);
+    doc.text(`Frequency Multiplier: ${frequencyMultiplier}`, 10, 40);
+    doc.text(`Distance Multiplier: ${distanceMultiplier}`, 10, 50);
+    doc.text(`Asymmetric Multiplier: ${asymmetricMultiplier}`, 10, 60);
+    doc.text(`Coupling Multiplier: ${couplingMultiplier}`, 10, 70);
+  
+    doc.text(`Recommended Weight Limit (RWL): ${calculatedResult} kg`, 10, 90);
+    doc.text(`Name: ${name} ${surname}`, 10, 100);
     doc.save('niosh_calculator.pdf');
   };
-
 
   const descriptions = {
     horizontalMultiplier: 'This is what you put here.',
@@ -171,7 +185,7 @@ function Frontend() {
         <img className="calc-photo" src="./nioshadam.jpeg" alt="NIOSH calculator"></img>
 
         <div className='desc-title'>
-          <p className="input-label">Horizontal Multiplier         <FontAwesomeIcon
+          <p className="input-label">Horizontal         <FontAwesomeIcon
             icon={faQuestionCircle}
             className="question-mark"
             onMouseEnter={() => toggleDescription('horizontalMultiplier')}
@@ -186,16 +200,18 @@ function Frontend() {
         </div>
         <div className="input-container">
           <input
+          ref={horizontalMultiplierRef}
             className="input"
             type="number"
             /* placeholder="Enter horizontal multiplier" */
             value={horizontalMultiplier}
             onChange={(e) => setHorizontalMultiplier(e.target.value)}
+            onKeyDown={(e) => handleKeyPress(e, verticalMultiplierRef)}
           />
         </div>
 
         <div className='desc-title'>
-          <p className="input-label">Vertical Multiplier           <FontAwesomeIcon
+          <p className="input-label">Vertical           <FontAwesomeIcon
             icon={faQuestionCircle}
             className="question-mark"
             onMouseEnter={() => toggleDescription('verticalMultiplier')}
@@ -210,16 +226,18 @@ function Frontend() {
         </div>
         <div className="input-container">
           <input
+          ref={verticalMultiplierRef}
             className="input"
             type="number"
             /* placeholder="Enter vertical multiplier" */
             value={verticalMultiplier}
             onChange={(e) => setVerticalMultiplier(e.target.value)}
+            onKeyDown={(e) => handleKeyPress(e, frequencyMultiplierRef)}
           />
         </div>
 
         <div className='desc-title'>
-          <p className="input-label">Frequency Multiplier           <FontAwesomeIcon
+          <p className="input-label">Frequency           <FontAwesomeIcon
             icon={faQuestionCircle}
             className="question-mark"
             onMouseEnter={() => toggleDescription('frequencyMultiplier')}
@@ -234,16 +252,18 @@ function Frontend() {
         </div>
         <div className="input-container">
           <input
+          ref={frequencyMultiplierRef}
             className="input"
             type="number"
             /* placeholder="Enter frequency multiplier" */
             value={frequencyMultiplier}
             onChange={(e) => setFrequencyMultiplier(e.target.value)}
+            onKeyDown={(e) => handleKeyPress(e, distanceMultiplierRef)}
           />
         </div>
 
         <div className='desc-title'>
-          <p className="input-label">Distance Multiplier           <FontAwesomeIcon
+          <p className="input-label">Distance           <FontAwesomeIcon
             icon={faQuestionCircle}
             className="question-mark"
             onMouseEnter={() => toggleDescription('distanceMultiplier')}
@@ -258,16 +278,18 @@ function Frontend() {
         </div>
         <div className="input-container">
           <input
+          ref={distanceMultiplierRef}
             className="input"
             type="number"
             /* placeholder="Enter distance multiplier" */
             value={distanceMultiplier}
             onChange={(e) => setDistanceMultiplier(e.target.value)}
+            onKeyDown={(e) => handleKeyPress(e, asymmetricMultiplierRef)}
           />
         </div>
 
         <div className='desc-title'>
-          <p className="input-label">Asymmetric Multiplier           <FontAwesomeIcon
+          <p className="input-label">Asymmetric           <FontAwesomeIcon
             icon={faQuestionCircle}
             className="question-mark"
             onMouseEnter={() => toggleDescription('asymmetricMultiplier')}
@@ -282,16 +304,18 @@ function Frontend() {
         </div>
         <div className="input-container">
           <input
+          ref={asymmetricMultiplierRef}
             className="input"
             type="number"
             /* placeholder="Enter asymmetric multiplier" */
             value={asymmetricMultiplier}
             onChange={(e) => setAsymmetricMultiplier(e.target.value)}
+            onKeyDown={(e) => handleKeyPress(e, couplingMultiplierRef)}
           />
         </div>
 
         <div className='desc-title'>
-          <p className="input-label">Coupling Multiplier             <FontAwesomeIcon
+          <p className="input-label">Coupling             <FontAwesomeIcon
             icon={faQuestionCircle}
             className="question-mark"
             onMouseEnter={() => toggleDescription('couplingMultiplier')}
@@ -313,6 +337,7 @@ function Frontend() {
               id="container"
               name="object-type"
               value="container"
+              ref={couplingMultiplierRef}
             />
             <label for="container"
               className="radio-label"
@@ -625,7 +650,41 @@ function Frontend() {
 
         {activeSection === 'analysis' && (
           <div className="section-analysis">
-            <p>Girilecek</p>
+            {(!horizontalMultiplier && !verticalMultiplier && !frequencyMultiplier && !distanceMultiplier && !asymmetricMultiplier && !couplingMultiplier) &&
+              <p></p>
+            }
+            {horizontalMultiplier && (
+              <p>You have entered: {horizontalMultiplier} for the horizontal multiplier. The optimal value was 19.</p>
+            )}
+            {verticalMultiplier && (
+              <p>You have entered: {verticalMultiplier} for the vertical multiplier. The optimal value was 19.</p>
+            )}
+            {frequencyMultiplier && (
+              <p>You have entered: {frequencyMultiplier} for the frequency multiplier. The optimal value was 19.</p>
+            )}
+            {distanceMultiplier && (
+              <p>You have entered: {distanceMultiplier} for the distance multiplier. The optimal value was 19.</p>
+            )}
+            {asymmetricMultiplier && (
+              <p>You have entered: {asymmetricMultiplier} for the assymetric multiplier. The optimal value was 19.</p>
+            )}
+            {couplingMultiplier && (
+              <p>Your coupling multiplier was: {couplingMultiplier} the optimal would be 1.00</p>
+            )}
+            {/* Show calculated result after calculation */}
+            {calculatedResult && (
+              <p>Recommended Weight Limit (RWL): {calculatedResult} kg </p>
+             
+              
+            )}
+              {calculatedResult && (
+              <p>Please see how you can improve these numbers on how-to part.</p>
+             
+              
+            )}
+            
+
+            
           </div>
         )}
 

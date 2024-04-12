@@ -48,3 +48,7 @@
 .navbar-mom {
   display: flex;
 }
+footer {
+  background-color: #7E57C2;
+  grid-area: footer;
+}
