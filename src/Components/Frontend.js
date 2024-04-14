@@ -1,5 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
-import React, { useState, useRef, useEffect  } from 'react';
+import React, { useState, useRef,/*  useEffect */ } from 'react';
 import './style.css'; // Import the CSS file
 /* import Navbar from './Navbar'; // Import the Navbar component */
 import jsPDF from 'jspdf';
@@ -10,7 +10,8 @@ function Frontend() {
   // State variables to store input values
   const [horizontalMultiplier, setHorizontalMultiplier] = useState('');
   const [verticalMultiplier, setVerticalMultiplier] = useState('');
-  const [frequencyMultiplier, setFrequencyMultiplier] = useState('');
+  const [frequencyMultiplierLifts, setFrequencyMultiplierLifts] = useState('');
+  const [frequencyMultiplierHours, setFrequencyMultiplierHours] = useState('');
   const [distanceMultiplier, setDistanceMultiplier] = useState('');
   const [asymmetricMultiplier, setAsymmetricMultiplier] = useState('');
   const [couplingMultiplier, setCouplingMultiplier] = useState('');
@@ -35,7 +36,8 @@ function Frontend() {
   });
   const horizontalMultiplierRef = useRef(null);
   const verticalMultiplierRef = useRef(null);
-  const frequencyMultiplierRef = useRef(null);
+  const frequencyMultiplierRef1 = useRef(null);
+  const frequencyMultiplierRef2 = useRef(null);
   const distanceMultiplierRef = useRef(null);
   const asymmetricMultiplierRef = useRef(null);
   const couplingMultiplierRef = useRef(null);
@@ -145,19 +147,20 @@ function Frontend() {
     doc.text('Inputs:', 10, 10);
     doc.text(`Horizontal Multiplier: ${horizontalMultiplier}`, 10, 20);
     doc.text(`Vertical Multiplier: ${verticalMultiplier}`, 10, 30);
-    doc.text(`Frequency Multiplier: ${frequencyMultiplier}`, 10, 40);
+    doc.text(`Frequency Multiplier: ${frequencyMultiplierLifts}`, 10, 40);
+    doc.text(`Frequency Multiplier: ${frequencyMultiplierHours}`, 10, 40);
     doc.text(`Distance Multiplier: ${distanceMultiplier}`, 10, 50);
     doc.text(`Asymmetric Multiplier: ${asymmetricMultiplier}`, 10, 60);
     doc.text(`Coupling Multiplier: ${couplingMultiplier}`, 10, 70);
-  
+
     doc.text(`Recommended Weight Limit (RWL): ${calculatedResult} kg`, 10, 90);
     doc.text(`Name: ${name} ${surname}`, 10, 100);
     doc.save('niosh_calculator.pdf');
   };
 
   const descriptions = {
-    horizontalMultiplier: 'This is what you put here.',
-    verticalMultiplier: 'This is what you put here.',
+    horizontalMultiplier: 'Description for horizontal multiplier.',
+    verticalMultiplier: 'Description for vertical multiplier.',
     frequencyMultiplier: 'Description for frequency multiplier',
     distanceMultiplier: 'Description for distance multiplier',
     asymmetricMultiplier: 'Description for asymmetric multiplier',
@@ -191,16 +194,16 @@ function Frontend() {
             onMouseEnter={() => toggleDescription('horizontalMultiplier')}
             onMouseLeave={() => toggleDescription('horizontalMultiplier')}
           /></p>
-            {showDescriptions.horizontalMultiplier && (
-              <div className="description-popup">
-                <img src={images.horizontalMultiplier} alt="Description" />
-                <p>{descriptions.horizontalMultiplier}</p>
-              </div>
-            )}
+          {showDescriptions.horizontalMultiplier && (
+            <div className="description-popup">
+              <img src={images.horizontalMultiplier} alt="Description" />
+              <p>{descriptions.horizontalMultiplier}</p>
+            </div>
+          )}
         </div>
         <div className="input-container">
           <input
-          ref={horizontalMultiplierRef}
+            ref={horizontalMultiplierRef}
             className="input"
             type="number"
             /* placeholder="Enter horizontal multiplier" */
@@ -217,22 +220,22 @@ function Frontend() {
             onMouseEnter={() => toggleDescription('verticalMultiplier')}
             onMouseLeave={() => toggleDescription('verticalMultiplier')}
           /></p>
-            {showDescriptions.verticalMultiplier && (
-              <div className="description-popup">
-                <img src={images.verticalMultiplier} alt="Description" />
-                <p>{descriptions.verticalMultiplier}</p>
-              </div>
-            )}
+          {showDescriptions.verticalMultiplier && (
+            <div className="description-popup">
+              <img src={images.verticalMultiplier} alt="Description" />
+              <p>{descriptions.verticalMultiplier}</p>
+            </div>
+          )}
         </div>
         <div className="input-container">
           <input
-          ref={verticalMultiplierRef}
+            ref={verticalMultiplierRef}
             className="input"
             type="number"
             /* placeholder="Enter vertical multiplier" */
             value={verticalMultiplier}
             onChange={(e) => setVerticalMultiplier(e.target.value)}
-            onKeyDown={(e) => handleKeyPress(e, frequencyMultiplierRef)}
+            onKeyDown={(e) => handleKeyPress(e, frequencyMultiplierRef1)}
           />
         </div>
 
@@ -243,23 +246,39 @@ function Frontend() {
             onMouseEnter={() => toggleDescription('frequencyMultiplier')}
             onMouseLeave={() => toggleDescription('frequencyMultiplier')}
           /></p>
-            {showDescriptions.frequencyMultiplier && (
-              <div className="description-popup">
-                <img src={images.frequencyMultiplier} alt="Description" />
-                <p>{descriptions.frequencyMultiplier}</p>
-              </div>
-            )}
+          {showDescriptions.frequencyMultiplier && (
+            <div className="description-popup">
+              <img src={images.frequencyMultiplier} alt="Description" />
+              <p>{descriptions.frequencyMultiplier}</p>
+            </div>
+          )}
         </div>
         <div className="input-container">
-          <input
-          ref={frequencyMultiplierRef}
-            className="input"
-            type="number"
-            /* placeholder="Enter frequency multiplier" */
-            value={frequencyMultiplier}
-            onChange={(e) => setFrequencyMultiplier(e.target.value)}
-            onKeyDown={(e) => handleKeyPress(e, distanceMultiplierRef)}
-          />
+          <div className='freq-input-container'>
+            <input
+              ref={frequencyMultiplierRef1}
+              className="input input-small"
+              type="number"
+              /* placeholder="Enter frequency multiplier" */
+              value={frequencyMultiplierLifts}
+              onChange={(e) => setFrequencyMultiplierLifts(e.target.value)}
+              onKeyDown={(e) => handleKeyPress(e, frequencyMultiplierRef2)}
+            />
+            <p className='freq-input-label'>lift(s)</p>
+          </div>
+          <p className='freq-input-label' id='per-label'>per</p>
+          <div className='freq-input-container'>
+            <input
+              ref={frequencyMultiplierRef2}
+              className="input input-small"
+              type="number"
+              /* placeholder="Enter frequency multiplier" */
+              value={frequencyMultiplierHours}
+              onChange={(e) => setFrequencyMultiplierHours(e.target.value)}
+              onKeyDown={(e) => handleKeyPress(e, distanceMultiplierRef)}
+            />
+            <p className='freq-input-label'>hour(s)</p>
+          </div>
         </div>
 
         <div className='desc-title'>
@@ -269,16 +288,16 @@ function Frontend() {
             onMouseEnter={() => toggleDescription('distanceMultiplier')}
             onMouseLeave={() => toggleDescription('distanceMultiplier')}
           /></p>
-            {showDescriptions.distanceMultiplier && (
-              <div className="description-popup">
-                <img src={images.distanceMultiplier} alt="Description" />
-                <p>{descriptions.distanceMultiplier}</p>
-              </div>
-            )}
+          {showDescriptions.distanceMultiplier && (
+            <div className="description-popup">
+              <img src={images.distanceMultiplier} alt="Description" />
+              <p>{descriptions.distanceMultiplier}</p>
+            </div>
+          )}
         </div>
         <div className="input-container">
           <input
-          ref={distanceMultiplierRef}
+            ref={distanceMultiplierRef}
             className="input"
             type="number"
             /* placeholder="Enter distance multiplier" */
@@ -304,7 +323,7 @@ function Frontend() {
         </div>
         <div className="input-container">
           <input
-          ref={asymmetricMultiplierRef}
+            ref={asymmetricMultiplierRef}
             className="input"
             type="number"
             /* placeholder="Enter asymmetric multiplier" */
@@ -620,7 +639,7 @@ function Frontend() {
 
         {activeSection === 'summary' && (
           <div className="section-summary">
-            {(!horizontalMultiplier && !verticalMultiplier && !frequencyMultiplier && !distanceMultiplier && !asymmetricMultiplier && !couplingMultiplier) &&
+            {(!horizontalMultiplier && !verticalMultiplier && !frequencyMultiplierLifts && !frequencyMultiplierHours && !distanceMultiplier && !asymmetricMultiplier && !couplingMultiplier) &&
               <p>Welcome to the calculator</p>
             }
             {horizontalMultiplier && (
@@ -629,8 +648,11 @@ function Frontend() {
             {verticalMultiplier && (
               <p>Vertical Multiplier: {verticalMultiplier}</p>
             )}
-            {frequencyMultiplier && (
-              <p>Frequency Multiplier: {frequencyMultiplier}</p>
+            {frequencyMultiplierLifts && (
+              <p>Frequency Multiplier: {frequencyMultiplierLifts}</p>
+            )}
+            {frequencyMultiplierHours && (
+              <p>Frequency Multiplier: {frequencyMultiplierHours}</p>
             )}
             {distanceMultiplier && (
               <p>Distance Multiplier: {distanceMultiplier}</p>
@@ -650,7 +672,7 @@ function Frontend() {
 
         {activeSection === 'analysis' && (
           <div className="section-analysis">
-            {(!horizontalMultiplier && !verticalMultiplier && !frequencyMultiplier && !distanceMultiplier && !asymmetricMultiplier && !couplingMultiplier) &&
+            {(!horizontalMultiplier && !verticalMultiplier && !frequencyMultiplierLifts && !frequencyMultiplierHours && !distanceMultiplier && !asymmetricMultiplier && !couplingMultiplier) &&
               <p></p>
             }
             {horizontalMultiplier && (
@@ -659,8 +681,11 @@ function Frontend() {
             {verticalMultiplier && (
               <p>You have entered: {verticalMultiplier} for the vertical multiplier. The optimal value was 19.</p>
             )}
-            {frequencyMultiplier && (
-              <p>You have entered: {frequencyMultiplier} for the frequency multiplier. The optimal value was 19.</p>
+            {frequencyMultiplierLifts && (
+              <p>You have entered: {frequencyMultiplierLifts} for the frequency multiplier. The optimal value was 19.</p>
+            )}
+            {frequencyMultiplierHours && (
+              <p>You have entered: {frequencyMultiplierHours} for the frequency multiplier. The optimal value was 19.</p>
             )}
             {distanceMultiplier && (
               <p>You have entered: {distanceMultiplier} for the distance multiplier. The optimal value was 19.</p>
@@ -674,17 +699,17 @@ function Frontend() {
             {/* Show calculated result after calculation */}
             {calculatedResult && (
               <p>Recommended Weight Limit (RWL): {calculatedResult} kg </p>
-             
-              
-            )}
-              {calculatedResult && (
-              <p>Please see how you can improve these numbers on how-to part.</p>
-             
-              
-            )}
-            
 
-            
+
+            )}
+            {calculatedResult && (
+              <p>Please see how you can improve these numbers on how-to part.</p>
+
+
+            )}
+
+
+
           </div>
         )}
 

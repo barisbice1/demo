@@ -64,6 +64,20 @@ h2 {
   color: #363538;
 }
 
+.input-small{
+  align-self: center;
+  display: inline-block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 0px solid #ccc;
+  border-radius: 3px;
+  text-align: center;
+  display: block;
+  background-color: #eee;
+  color: #363538;
+}
+
 .question-mark {
   padding-top: 10px;
   margin-left: 10px;
@@ -248,4 +262,19 @@ input[type="radio"]:checked+label {
   padding: 15px 0px;
   font-size: 13px;
   font-weight: bold;
+}
+
+.freq-input-label{
+  text-align: center;
+  color: #408697;
+  align-self: center;
+  margin-bottom: 10px;
+  padding: 0px 5px;
+  font-size: 13px;
+  font-weight: bold
+}
+
+#per-label{
+  margin-bottom: 40px;
+  padding: 0px 10px;
 }
