@@ -12,6 +12,7 @@ function Frontend() {
   const [verticalMultiplier, setVerticalMultiplier] = useState('');
   const [frequencyMultiplierLifts, setFrequencyMultiplierLifts] = useState('');
   const [frequencyMultiplierHours, setFrequencyMultiplierHours] = useState('');
+  const [frequencyMultiplierDuration, setFrequencyMultiplierDuration] = useState('');
   const [distanceMultiplier, setDistanceMultiplier] = useState('');
   const [asymmetricMultiplier, setAsymmetricMultiplier] = useState('');
   const [couplingMultiplier, setCouplingMultiplier] = useState('');
@@ -38,6 +39,7 @@ function Frontend() {
   const verticalMultiplierRef = useRef(null);
   const frequencyMultiplierRef1 = useRef(null);
   const frequencyMultiplierRef2 = useRef(null);
+  const frequencyMultiplierRef3 = useRef(null);
   const distanceMultiplierRef = useRef(null);
   const asymmetricMultiplierRef = useRef(null);
   const couplingMultiplierRef = useRef(null);
@@ -149,6 +151,7 @@ function Frontend() {
     doc.text(`Vertical Multiplier: ${verticalMultiplier}`, 10, 30);
     doc.text(`Frequency Multiplier: ${frequencyMultiplierLifts}`, 10, 40);
     doc.text(`Frequency Multiplier: ${frequencyMultiplierHours}`, 10, 40);
+    doc.text(`Frequency Multiplier: ${frequencyMultiplierDuration}`, 10, 40);
     doc.text(`Distance Multiplier: ${distanceMultiplier}`, 10, 50);
     doc.text(`Asymmetric Multiplier: ${asymmetricMultiplier}`, 10, 60);
     doc.text(`Coupling Multiplier: ${couplingMultiplier}`, 10, 70);
@@ -253,8 +256,10 @@ function Frontend() {
             </div>
           )}
         </div>
+   
         <div className="input-container">
           <div className='freq-input-container'>
+          <p className='freq-input-label'>Lifts (per min.)</p>
             <input
               ref={frequencyMultiplierRef1}
               className="input input-small"
@@ -264,20 +269,24 @@ function Frontend() {
               onChange={(e) => setFrequencyMultiplierLifts(e.target.value)}
               onKeyDown={(e) => handleKeyPress(e, frequencyMultiplierRef2)}
             />
-            <p className='freq-input-label'>lift(s)</p>
+            
           </div>
-          <p className='freq-input-label' id='per-label'>per</p>
+          <p>-</p>
+ 
+
+    
           <div className='freq-input-container'>
+          <p className='freq-input-label'>Duration(hour(s))</p>
             <input
-              ref={frequencyMultiplierRef2}
+              ref={frequencyMultiplierRef3}
               className="input input-small"
               type="number"
               /* placeholder="Enter frequency multiplier" */
-              value={frequencyMultiplierHours}
-              onChange={(e) => setFrequencyMultiplierHours(e.target.value)}
-              onKeyDown={(e) => handleKeyPress(e, distanceMultiplierRef)}
+              value={frequencyMultiplierDuration}
+              onChange={(e) => setFrequencyMultiplierDuration(e.target.value)}
+              onKeyDown={(e) => handleKeyPress(e, frequencyMultiplierRef3)}
             />
-            <p className='freq-input-label'>hour(s)</p>
+           
           </div>
         </div>
 
@@ -675,24 +684,54 @@ function Frontend() {
             {(!horizontalMultiplier && !verticalMultiplier && !frequencyMultiplierLifts && !frequencyMultiplierHours && !distanceMultiplier && !asymmetricMultiplier && !couplingMultiplier) &&
               <p></p>
             }
-            {horizontalMultiplier && (
-              <p>You have entered: {horizontalMultiplier} for the horizontal multiplier. The optimal value was 19.</p>
-            )}
-            {verticalMultiplier && (
-              <p>You have entered: {verticalMultiplier} for the vertical multiplier. The optimal value was 19.</p>
-            )}
+        {/* Implementing logic for horizontal distance */}
+        {horizontalMultiplier > 63 && (
+          <p>You should focus on lowering the horizontal distance under 63 cm in order to get better results.</p>
+        )}
+        {horizontalMultiplier >= 25 && horizontalMultiplier <= 63 && (
+          <p>Please note that if your value is near 25, you'll get better results.</p>
+        )}
+        {horizontalMultiplier < 25 && (
+          <p>You are in the perfect range. Horizontal Multiplier is equal to 1.</p>
+        )}
+       
+        {verticalMultiplier > 175 && (
+          <p>This is more than the upper limit. You should get the product lower than 175 cm. </p>
+        )}
+        {verticalMultiplier != 75 && verticalMultiplier < 175 && verticalMultiplier != 0 && (
+          <p>If you want a perfect range, the vertical value should be 75 cm.</p>
+        )}
+        {verticalMultiplier == 75 && (
+          <p>You are in the ideal vertical position.</p>
+        )}
+           {verticalMultiplier == 0 && (
+          <p>You entered a value 0 cm. Keeping the load closer to 75 centimeters is beneficial for the worker’s body. </p>
+        )}
             {frequencyMultiplierLifts && (
               <p>You have entered: {frequencyMultiplierLifts} for the frequency multiplier. The optimal value was 19.</p>
             )}
             {frequencyMultiplierHours && (
-              <p>You have entered: {frequencyMultiplierHours} for the frequency multiplier. The optimal value was 19.</p>
+              <p>You have entered: {frequencyMultiplierDuration} for the frequency multiplier. The optimal value was 19.</p>
             )}
-            {distanceMultiplier && (
-              <p>You have entered: {distanceMultiplier} for the distance multiplier. The optimal value was 19.</p>
-            )}
-            {asymmetricMultiplier && (
-              <p>You have entered: {asymmetricMultiplier} for the assymetric multiplier. The optimal value was 19.</p>
-            )}
+        {distanceMultiplier > 175 && (
+          <p>You’re lifting the product above the upper limit 175 cm. This range is harmful to your body. Try to lower the lifting distance. </p>
+        )}
+        {distanceMultiplier < 25  && (
+          <p>You entered the value under 25 cm. Value of the DM is equal to 1, which is optimal.</p>
+        )}
+        {distanceMultiplier >= 25 && distanceMultiplier < 175 &&(
+          <p>· You entered the value between 25 and 175. Please keep in mind that if the lifting distance is closer to 175 cm, it is ergonomically dangerous. It is better if the distance is closer to 25 cm.</p>
+        )}
+  
+  {asymmetricMultiplier > 135 && (
+          <p>You entered a value bigger than 135 for the assymetrical degree, that means AM is equal to 0, and the angle between pick-up and release process poses ergonomic risks. Process  angle requires improvement.</p>
+        )}
+        {asymmetricMultiplier > 0 && asymmetricMultiplier <= 135  && (
+          <p>Angle is not too bad, but not great either. if you want a better value, you should decrease the angle between pick-up and release process.</p>
+        )}
+        {asymmetricMultiplier == 0 && (
+          <p>This is the optimal value.</p>
+        )}
             {couplingMultiplier && (
               <p>Your coupling multiplier was: {couplingMultiplier} the optimal would be 1.00</p>
             )}
